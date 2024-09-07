@@ -1,12 +1,14 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NavbarComponent from './components/Navbar';  
+import NavbarComponent from './components/Navbar';
+import Landing from './components/Landing';  
 
 function App() {
   return (
     <Router>
     <NavbarComponent />
+    <Landing />
     <Routes>
       <Route path="/create" element={<div>Create Page</div>} />
       <Route path="/drafts" element={<div>Drafts Page</div>} />

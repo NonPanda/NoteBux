@@ -1,0 +1,100 @@
+/* Landing.css */
+/* LandingPage.css */
+.carousel-container {
+    position: relative;
+  }
+  
+  /* Hide default indicators from Bootstrap */
+  .carousel-indicators {
+    display: none;
+  }
+  
+  /* Custom indicator wrapper */
+  .custom-indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px; /* Adjust space below the caption */
+    gap: 8px; /* Spacing between custom indicators */
+  }
+  
+  /* Styling each indicator as a small square */
+  .custom-indicator {
+    width: 8px;
+    height: 8px;
+    background-color: hwb(19 50% 4%); /* Orange color for squares */
+    border: none;
+    border-radius: 2px; /* Slight rounding for a clean look */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-bottom: 10px;
+  }
+  
+  /* Active state for the custom indicator */
+  .custom-indicator.active {
+    background-color: #d9534f; /* Slightly darker for active state */
+    transform: scale(1.2); /* Highlight active square */
+  }
+  
+  /* Style arrows for better aesthetics */
+  .carousel-arrow {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+  }
+  
+  .carousel-arrow:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Caption styling below the image */
+  .carousel-caption-below {
+    text-align: center;
+    margin-top: 10px; /* Adds space between the caption and indicators */
+  }
+  
+  
+  .hero-section {
+    background-color: #f8f9fa;
+  }
+  
+  .carousel-image {
+    max-width: 300px;
+  }
+  
+  .cta-button {
+    background-color: #d9534f;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #c9302c;
+  }
+  
+  .login-link {
+    color: #d9534f;
+    text-decoration: none;
+  }
+  
+  .login-link:hover {
+    text-decoration: underline;
+  }
+
+    .carousel-image {
+        width: 320px;
+        height: 320px;
+    }
+
+    .carousel{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left:25%;
+        width:50%;
+    }
+    
+
+  
