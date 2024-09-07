@@ -1,0 +1,22 @@
+.navbar-logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #D05D47; 
+    margin-right: 1rem;
+  }
+  
+  .nav-icon {
+    width: 20px; 
+    height: 20px;
+  }
+  
+  .btn-outline-danger {
+    background-color: #D05D47;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #b0493b;
+  }
+  
