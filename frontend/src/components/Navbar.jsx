@@ -6,10 +6,44 @@ import clipboardIcon from '../assets/icons/navbar/clipboard.svg';
 import searchIcon from '../assets/icons/navbar/search.svg';
 import bellIcon from '../assets/icons/navbar/bell.svg';
 import notebuxIcon from '../assets/icons/navbar/NOTEBUX.svg'; 
-
 import './Navbar.css'; 
+import { signInWithPopup, auth, provider } from '../firebaseConfig';
+import { useState, useEffect } from 'react';
+import { signOut } from 'firebase/auth';
+
 
 const NavbarComponent = () => {
+  const [user, setUser] = useState(null); 
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user); 
+      } else {
+        setUser(null); 
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const loggedInUser = result.user;
+      console.log("User Info: ", loggedInUser);
+    } catch (error) {
+      console.error("Login Error: ", error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log("User logged out");
+    } catch (error) {
+      console.error("Logout Error: ", error);
+    }
+  };
   return (
     <Navbar bg="light" expand="lg" className="px-4">
       <Navbar.Brand href="/" className="d-flex align-items-center">
@@ -34,10 +68,25 @@ const NavbarComponent = () => {
             <img src={bellIcon} alt="Alerts Icon" className="nav-icon me-2" />
             Alerts
           </Nav.Link>
-        </Nav>
-        <Button variant="outline-danger" className="ms-3">
+
+          {user ? (
+        <div className="user-info">
+          <img
+            src={user.photoURL}
+            alt="Profile"
+            className="profile-pic"
+            referrerPolicy="no-referrer"
+          />
+          <Button variant="outline-danger" className="ms-3" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
+      ):(
+        <Button variant="outline-danger" className="ms-3" onClick={handleGoogleLogin}>
           Login
         </Button>
+      )}
+        </Nav>
       </Navbar.Collapse>
     </Navbar>
   );

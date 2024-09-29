@@ -47,8 +47,8 @@ const Landing = () => {
           <Carousel
             className="carousel-container mb-4"
             activeIndex={index}
-            onSelect={() => {}} // Empty to prevent click changes on indicators
-            interval={null} // Stops automatic cycling of items
+            onSelect={() => {}} 
+            interval={null} 
             prevIcon={<img src={leftArrow} alt="Previous" className="carousel-arrow" onClick={handlePrev} />}
             nextIcon={<img src={rightArrow} alt="Next" className="carousel-arrow" onClick={handleNext} />}
           >
@@ -68,10 +68,8 @@ const Landing = () => {
             ))}
           </Carousel>
 
-          {/* Custom Carousel Controls */}
           
 
-          {/* Custom Indicators */}
           <div className="custom-indicators">
             {carouselItems.map((_, idx) => (
               <div
@@ -81,7 +79,6 @@ const Landing = () => {
             ))}
           </div>
 
-          {/* Call to Action Button */}
           <Button variant="danger" className="cta-button">
             GET STARTED
           </Button>
