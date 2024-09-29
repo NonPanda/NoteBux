@@ -2,20 +2,39 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavbarComponent from './components/Navbar';
-import Landing from './components/Landing';  
+import Landing from './components/Landing'; 
+import SearchPage from './components/SearchPage';
+import CreatePage from './components/CreatePage';
+import { useState, useEffect } from 'react';
+import { auth } from './firebaseConfig';
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  // Manage user state here
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  console.log("Current User:", user); 
+
   return (
     <Router>
-    <NavbarComponent />
-    <Landing />
-    <Routes>
-      <Route path="/create" element={<div>Create Page</div>} />
-      <Route path="/drafts" element={<div>Drafts Page</div>} />
-      <Route path="/browse" element={<div>Browse Page</div>} />
-      <Route path="/alerts" element={<div>Alerts Page</div>} />
-    </Routes>
-  </Router>
+      <NavbarComponent user={user} />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/search" element={<SearchPage user={user} />} />
+        <Route path="/create" element={<CreatePage user={user} />} />
+      </Routes>
+    </Router>
   );
 }
 

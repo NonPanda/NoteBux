@@ -8,24 +8,11 @@ import bellIcon from '../assets/icons/navbar/bell.svg';
 import notebuxIcon from '../assets/icons/navbar/NOTEBUX.svg'; 
 import './Navbar.css'; 
 import { signInWithPopup, auth, provider } from '../firebaseConfig';
-import { useState, useEffect } from 'react';
 import { signOut } from 'firebase/auth';
 
 
-const NavbarComponent = () => {
-  const [user, setUser] = useState(null); 
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user); 
-      } else {
-        setUser(null); 
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
+const NavbarComponent = ({ user }) => {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
@@ -44,6 +31,7 @@ const NavbarComponent = () => {
       console.error("Logout Error: ", error);
     }
   };
+
   return (
     <Navbar bg="light" expand="lg" className="px-4">
       <Navbar.Brand href="/" className="d-flex align-items-center">
@@ -60,7 +48,7 @@ const NavbarComponent = () => {
             <img src={clipboardIcon} alt="Drafts Icon" className="nav-icon me-2" />
             Drafts
           </Nav.Link>
-          <Nav.Link as={Link} to="/browse" className="d-flex align-items-center">
+          <Nav.Link as={Link} to="/search" className="d-flex align-items-center">
             <img src={searchIcon} alt="Browse Icon" className="nav-icon me-2" />
             Browse
           </Nav.Link>
@@ -70,22 +58,22 @@ const NavbarComponent = () => {
           </Nav.Link>
 
           {user ? (
-        <div className="user-info">
-          <img
-            src={user.photoURL}
-            alt="Profile"
-            className="profile-pic"
-            referrerPolicy="no-referrer"
-          />
-          <Button variant="outline-danger" className="ms-3" onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
-      ):(
-        <Button variant="outline-danger" className="ms-3" onClick={handleGoogleLogin}>
-          Login
-        </Button>
-      )}
+            <div className="user-info">
+              <img
+                src={user.photoURL}
+                alt="Profile"
+                className="profile-pic"
+                referrerPolicy="no-referrer"
+              />
+              <Button variant="outline-danger" className="ms-3" onClick={handleLogout}>
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Button variant="outline-danger" className="ms-3" onClick={handleGoogleLogin}>
+              Login
+            </Button>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

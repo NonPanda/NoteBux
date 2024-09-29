@@ -1,7 +1,6 @@
-// LandingPage.jsx
 import React, { useState } from 'react';
 import { Button, Carousel } from 'react-bootstrap';
-import './Landing.css'; // Custom styles
+import './Landing.css'; 
 import heroImage1 from '../assets/images/Group1.svg';
 import heroImage2 from '../assets/images/Group2.svg';
 import heroImage3 from '../assets/images/Group3.svg';
@@ -9,9 +8,7 @@ import leftArrow from '../assets/icons/arrow-left.svg';
 import rightArrow from '../assets/icons/arrow-right.svg';
 
 const Landing = () => {
-  const [index, setIndex] = useState(0); // State to track the current index
-
-  // Data array containing image and caption pairs
+  const [index, setIndex] = useState(0); 
   const carouselItems = [
     {
       image: heroImage1,
@@ -30,7 +27,6 @@ const Landing = () => {
     },
   ];
 
-  // Handle index update when arrow icons are clicked
   const handleNext = () => {
     setIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
   };
@@ -59,8 +55,7 @@ const Landing = () => {
                   src={item.image}
                   alt={item.title}
                 />
-                {/* Caption Below */}
-                <div className="carousel-caption-below">
+                <div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
                 </div>
@@ -83,7 +78,7 @@ const Landing = () => {
             GET STARTED
           </Button>
           <p className="mt-3">
-            <a href="/login" className="login-link">Already have an account?</a>
+            <a href="/" className="login-link">Already signed in?</a>
           </p>
         </div>
       </section>
