@@ -18,15 +18,15 @@ const extractUserId = (req, res, next) => {
 };
 
 router.get('/', extractUserId, async (req, res) => {
-  const userId = req.userId; // Access userId here
-
+  const userId = req.userId;
   try {
-    const drafts = await Draft.find({ userId });
+    const drafts = await Draft.find({ userId }).sort({ createdAt: -1 }); // Sort by date, descending
     res.json(drafts);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 router.post('/create', extractUserId, async (req, res) => {
   const { title, content } = req.body;
