@@ -29,13 +29,14 @@ router.get('/', extractUserId, async (req, res) => {
 
 
 router.post('/create', extractUserId, async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content,category } = req.body;
   const userId = req.userId; // Access userId here
 
   const draft = new Draft({
     userId,
     title,
-    content
+    content,
+    category
   });
 
   try {

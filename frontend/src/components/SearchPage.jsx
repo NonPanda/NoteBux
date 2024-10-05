@@ -5,33 +5,41 @@ import leftArrow from '../assets/icons/arrow-left.svg';
 import rightArrow from '../assets/icons/arrow-right.svg';
 
 const colorOptions = ['#D9E8FC', '#FFEADD', '#FFD8F4', '#FDE99D', '#B0E9CA', '#FFDBE4', '#FCFAD9'];
+
 const SearchPage = ({ user }) => {
   const [drafts, setDrafts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // Search term for filtering drafts
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Today's date
+  const [categories, setCategories] = useState([]); // State for categories
+  const [selectedCategory, setSelectedCategory] = useState("All"); // Default category
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [visibleDates, setVisibleDates] = useState([]);
-  const daysInWeek = 7; // Show a week's worth of dates
+  const daysInWeek = 7;
 
   useEffect(() => {
     if (user) {
       // Fetch drafts for the selected date
-      axios.get(`http://localhost:5000/api/drafts?date=${selectedDate.toISOString()}`, {
+      axios.get(`http://localhost:5000/api/drafts`, {
         headers: {
-          Authorization: `Bearer ${user.uid}`
-        }
+          Authorization: `Bearer ${user.uid}`,
+        },
       })
-         .then(res => {
-          // Assign a random color from the set to each draft
-          const draftsWithColors = res.data.map(draft => ({
-            ...draft,
-            color: colorOptions[Math.floor(Math.random() * colorOptions.length)]
-          }));
-          setDrafts(draftsWithColors);
-        })
-        .catch(err => console.error(err));
+      .then(res => {
+        // Assign a random color from the set to each draft
+        const draftsWithColors = res.data.map(draft => ({
+          ...draft,
+          color: colorOptions[Math.floor(Math.random() * colorOptions.length)],
+        }));
+        setDrafts(draftsWithColors);
+
+        // Extract unique categories
+        const uniqueCategories = new Set(draftsWithColors.map(draft => draft.category));
+        setCategories(["All", ...Array.from(uniqueCategories)]); // Include "All" as an option
+      })
+      
+
+      .catch(err => console.error(err));
     }
-  }, [user, selectedDate]);
-   
+  }, [user]);
 
   useEffect(() => {
     // Generate visible dates (a week view based on today's date)
@@ -59,16 +67,33 @@ const SearchPage = ({ user }) => {
     setSearchTerm(e.target.value); // Update search term when user types in search bar
   };
 
- 
-  // Filter drafts based on search term and createdAt date
+  // Filter drafts based on search term, selected category, and createdAt date
   const filteredDrafts = drafts.filter(draft => {
     const draftDate = new Date(draft.createdAt).toDateString();
     const selectedDateString = selectedDate.toDateString();
-    return draftDate === selectedDateString && draft.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesDate = draftDate === selectedDateString;
+    const matchesSearchTerm = draft.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || draft.category === selectedCategory;
+
+    return matchesDate && matchesSearchTerm && matchesCategory;
   });
+
+  console.log('Drafts:', drafts);
+  console.log('Categories:', categories);
 
   return (
     <div>
+      {/* Category Filter */}
+      <div className="category-filter">
+        <select onChange={e => setSelectedCategory(e.target.value)} value={selectedCategory}>
+          {categories.map(category => 
+          
+          (
+            <option key={category} value={category}>{category}</option>
+          ))}
+        </select>
+      </div>
+
       {/* Search bar */}
       <div className="search-bar-container">
         <input
@@ -81,7 +106,7 @@ const SearchPage = ({ user }) => {
       </div>
 
       <div className="date-navigation mt-5">
-        <img className="arrow-button" onClick={handlePrevWeek} src={leftArrow} alt='leftarrow'></img>
+        <img className="arrow-button" onClick={handlePrevWeek} src={leftArrow} alt='leftarrow' />
         <div className="dates-container">
           {visibleDates.map((date, index) => (
             <button
@@ -95,15 +120,16 @@ const SearchPage = ({ user }) => {
             </button>
           ))}
         </div>
-        <img className="arrow-button" onClick={handleNextWeek} src={rightArrow} alt='rightarrow'></img>
+        <img className="arrow-button" onClick={handleNextWeek} src={rightArrow} alt='rightarrow' />
       </div>
+
       <hr className="mx-auto" style={{ width: '65%' }} />
 
       {filteredDrafts.length > 0 ? (
         <div className="drafts-container">
           {filteredDrafts.map(draft => (
             <div key={draft._id} className="draft-card" style={{ backgroundColor: draft.color }}>
-              <h3 class='text-center'>{draft.title}</h3>
+              <h3 className='text-center'>{draft.title}</h3>
               <p>{draft.content}</p>
             </div>
           ))}

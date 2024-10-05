@@ -4,6 +4,7 @@ import axios from 'axios';
 const CreatePage = ({ user }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [category, setCategory] = useState(''); // New state for category
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -11,16 +12,21 @@ const CreatePage = ({ user }) => {
     try {
       const response = await axios.post(
         'http://localhost:5000/api/drafts/create',
-        { title, content },
+        { title, content, category }, // Include category in the request
         {
           headers: {
-            Authorization: `Bearer ${user?.uid}` 
-          }
+            Authorization: `Bearer ${user?.uid}`,
+          },
         }
       );
       console.log('Draft created:', response.data);
+      
+      // Clear the input fields after successful creation
+      setTitle('');
+      setContent('');
+      setCategory('');
     } catch (error) {
-      console.error('Error creating draft:', error.response.data);
+      console.error('Error creating draft:', error.response?.data || error.message);
     }
   };
 
@@ -38,6 +44,12 @@ const CreatePage = ({ user }) => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         required
+      />
+      <input
+        type="text"
+        placeholder="Category (optional)"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)} // Update category state
       />
       <button type="submit">Create Draft</button>
     </form>

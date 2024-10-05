@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const draftRoute = require('./drafts');
+const categoryRoute = require('./categories');
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/drafts', draftRoute);
+
 
 app.use((req, res, next) => {
   console.log('Current user id:', req.user?.uid);
