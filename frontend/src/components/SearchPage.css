@@ -1,3 +1,6 @@
+
+
+
 .date-navigation {
     display: flex;
     align-items: center;
@@ -32,6 +35,7 @@
     gap: 10px;
     margin-left:5%;
     margin-right:5%;
+    text-decoration: none;
   }
   
   .date-button {
@@ -45,6 +49,7 @@
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-decoration:none;
   }
   
   .date-button.active {
@@ -55,10 +60,12 @@
   .day-number {
     font-size: 18px;
     font-weight: bold;
+    text-decoration: none;
   }
   
   .day-name {
     font-size: 12px;
+
   }
   
   .drafts-container {
@@ -84,11 +91,15 @@
     padding-left: 18px;
     padding-right: 18px;
     border: 1px solid #bbb6b6; 
+    text-decoration: none;
   }
   
   .draft-card h3 {
     margin: 0;
     font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+
   }
   
   .draft-card p {
@@ -96,6 +107,7 @@
     margin-top: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-decoration: none;
     
   }
   

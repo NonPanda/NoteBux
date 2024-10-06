@@ -1,32 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom'; // Import useLocation to get draft data
 
 const CreatePage = ({ user }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [category, setCategory] = useState(''); // New state for category
+  const location = useLocation();
+  const draftToEdit = location.state?.draft; // Get the draft from location.state
+
+  const [title, setTitle] = useState(draftToEdit ? draftToEdit.title : '');
+  const [content, setContent] = useState(draftToEdit ? draftToEdit.content : '');
+  const [category, setCategory] = useState(draftToEdit ? draftToEdit.category : '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/drafts/create',
-        { title, content, category }, // Include category in the request
-        {
-          headers: {
-            Authorization: `Bearer ${user?.uid}`,
-          },
-        }
-      );
-      console.log('Draft created:', response.data);
+      const data = { title, content, category };
+      const headers = { Authorization: `Bearer ${user?.uid}` };
       
-      // Clear the input fields after successful creation
+      if (draftToEdit) {
+        // If there's an existing draft, update it
+        const response = await axios.put(
+          `http://localhost:5000/api/drafts/${draftToEdit._id}`,
+          data,
+          { headers }
+        );
+        console.log('Draft updated:', response.data);
+      } else {
+        // Otherwise, create a new draft
+        const response = await axios.post(
+          'http://localhost:5000/api/drafts/create',
+          data,
+          { headers }
+        );
+        console.log('Draft created:', response.data);
+      }
+
+      // Clear the fields after submission
       setTitle('');
       setContent('');
       setCategory('');
     } catch (error) {
-      console.error('Error creating draft:', error.response?.data || error.message);
+      console.error('Error creating or updating draft:', error.response?.data || error.message);
     }
   };
 
@@ -49,9 +63,9 @@ const CreatePage = ({ user }) => {
         type="text"
         placeholder="Category (optional)"
         value={category}
-        onChange={(e) => setCategory(e.target.value)} // Update category state
+        onChange={(e) => setCategory(e.target.value)}
       />
-      <button type="submit">Create Draft</button>
+      <button type="submit">{draftToEdit ? 'Update Draft' : 'Create Draft'}</button>
     </form>
   );
 };

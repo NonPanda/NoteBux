@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Draft = require('./Draft');
 
+// Middleware to extract userId from the Authorization token
 const extractUserId = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
@@ -17,6 +18,7 @@ const extractUserId = (req, res, next) => {
   next();
 };
 
+// GET all drafts for a user
 router.get('/', extractUserId, async (req, res) => {
   const userId = req.userId;
   try {
@@ -27,9 +29,9 @@ router.get('/', extractUserId, async (req, res) => {
   }
 });
 
-
+// POST a new draft
 router.post('/create', extractUserId, async (req, res) => {
-  const { title, content,category } = req.body;
+  const { title, content, category } = req.body;
   const userId = req.userId; // Access userId here
 
   const draft = new Draft({
@@ -44,6 +46,51 @@ router.post('/create', extractUserId, async (req, res) => {
     res.status(201).json(newDraft);
   } catch (err) {
     res.status(400).json({ message: err.message });
+  }
+});
+
+router.get('/:id', extractUserId, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  try {
+    // Find the draft by id and ensure it belongs to the current user
+    const draft = await Draft.findOne({ _id: id, userId });
+
+    if (!draft) {
+      return res.status(404).json({ message: 'Draft not found' });
+    }
+
+    res.status(200).json(draft);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// PUT route to update an existing draft
+router.put('/:id', extractUserId, async (req, res) => {
+  const { id } = req.params;
+  const { title, content, category, favourited, daily } = req.body; // Include favourited
+  const userId = req.userId;
+  const updatedAt = Date.now(); 
+  
+
+  try {
+    // Find the draft by id and ensure it belongs to the current user
+    const draft = await Draft.findOneAndUpdate(
+      { _id: id, userId }, // Ensure the draft belongs to the user
+      { title, content, category, favourited, updatedAt, daily }, // Update fields
+      { new: true } // Return the updated document
+    
+    );
+
+    if (!draft) {
+      return res.status(404).json({ message: 'Draft not found' });
+    }
+
+    res.status(200).json(draft);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
