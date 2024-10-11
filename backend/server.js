@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const draftRoute = require('./drafts');
 const alertRoute = require('./alerts');
+const reminderRoute = require('./reminders');
 
 dotenv.config();
 const app = express();
@@ -11,8 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/drafts', draftRoute);
 app.use('/api/alerts', alertRoute);
-
-
+app.use('/api/reminders', reminderRoute);
 app.use((req, res, next) => {
   console.log('Current user id:', req.user?.uid);
   next();
