@@ -116,12 +116,17 @@ const SearchPage = ({ user }) => {
       {filteredDrafts.length > 0 ? (
         <div className="drafts-container">
           {filteredDrafts.map(draft => (
-            <Link key={draft._id} to={`/edit-draft/${draft._id}`}> {/* Navigate to edit page */}
-              <div className="draft-card" style={{ backgroundColor: draft.color }}>
-                <h3 className='text-center'>{draft.title}</h3>
-                <p>{draft.content}</p>
-              </div>
-            </Link>
+            <Link 
+            key={draft._id} 
+            to={`/create`} 
+            state={{ draft }} // Pass the draft data
+          >
+            <div className="draft-card" style={{ backgroundColor: draft.color }}>
+              <h3 className='text-center'>{draft.title}</h3>
+              <div className="draft-content-preview" dangerouslySetInnerHTML={{ __html: draft.content.substring(0, 100) }} />
+            </div>
+          </Link>
+          
           ))}
         </div>
       ) : (

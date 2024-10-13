@@ -85,3 +85,4 @@ const Alerts = ({ user }) => {
 };
 
 export default Alerts;
+

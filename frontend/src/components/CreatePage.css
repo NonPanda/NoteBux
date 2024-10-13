@@ -1,0 +1,130 @@
+.create-page-container {
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+
+.header {
+  text-align: center;
+  
+}
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.toolbar button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toolbar button:hover {
+  background-color: #e0e0e0;
+}
+
+.editor-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-container {
+  margin-bottom: 10px;
+}
+
+.title-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.content-container {
+  margin-bottom: 10px;
+}
+
+.content-input {
+  width: 100%;
+  min-height: 200px;
+  padding: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none; 
+  white-space: pre-wrap;
+}
+
+
+.category-container {
+  margin-bottom: 20px;
+}
+
+.category-input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #e65a4f;
+}
+
+.footer {
+  display: flex;
+  justify-content: center; /* Center items in the footer */
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  position: relative; /* Set position to relative for absolute positioning of the info button */
+}
+
+.page-indicator {
+  font-size: 16px;
+  color: #666;
+  margin-right: auto; /* Push the info button to the right */
+}
+
+.info-button {
+  position: absolute; /* Position the button absolutely */
+  right: 10px; /* Align it to the right */
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ff6f61;
+  transition: color 0.2s;
+}
+
+.info-button:hover {
+  color: #e65a4f;
+}

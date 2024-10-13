@@ -122,3 +122,21 @@
   .arrow-button:hover{
     transform: scale(1.1);
   }
+
+
+  /* Remove default link styling for the draft links */
+.drafts-container a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit the color from the parent element */
+}
+
+.draft-card:hover{
+  cursor: pointer;
+  transform: scale(1.04);
+  transition: transform 0.3s ease;
+  
+
+
+}
+
+

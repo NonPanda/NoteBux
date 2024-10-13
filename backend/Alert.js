@@ -12,7 +12,7 @@ const alertSchema = new mongoose.Schema({
   user: {
     type: String, // Or mongoose.Schema.Types.ObjectId if linked to a User model
     required: true,
-  }
+  },
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt
 });

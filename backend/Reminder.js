@@ -13,6 +13,12 @@ const reminderSchema = new mongoose.Schema({
     type: String, // Or mongoose.Schema.Types.ObjectId if linked to a User model
     required: true,
   }
+  ,
+  dismissed: {
+    type: Boolean,
+    default: false,
+  }
+
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt
 });

@@ -17,29 +17,34 @@ const DraftsPage = ({ user }) => {
   useEffect(() => {
     if (user) {
       // Fetch all drafts
-      axios.get('http://localhost:5000/api/drafts', {
-        headers: {
-          Authorization: `Bearer ${user.uid}`,
-        },
-      })
-      .then(res => {
-        const allDrafts = res.data;
+      axios
+        .get('http://localhost:5000/api/drafts', {
+          headers: {
+            Authorization: `Bearer ${user.uid}`,
+          },
+        })
+        .then((res) => {
+          const allDrafts = res.data;
 
-        // Assign random colors to each draft
-        const draftsWithColors = allDrafts.map(draft => ({
-          ...draft,
-          color: colorOptions[Math.floor(Math.random() * colorOptions.length)],
-        }));
+          // Assign random colors to each draft
+          const draftsWithColors = allDrafts.map((draft) => ({
+            ...draft,
+            color: colorOptions[Math.floor(Math.random() * colorOptions.length)],
+          }));
 
-        // Filter favourited drafts
-        const favDrafts = draftsWithColors.filter(draft => draft.favourited);
-        setFavouriteDrafts(favDrafts);
+          // Sort drafts by updatedAt for both recent and favourite lists
+          const sortedDrafts = draftsWithColors.sort(
+            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+          );
 
-        // Sort drafts by updatedAt for "Recent"
-        const sortedDrafts = draftsWithColors.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-        setRecentDrafts(sortedDrafts);
-      })
-      .catch(err => console.error('Error fetching drafts:', err));
+          // Filter and sort favourite drafts by updatedAt
+          const favDrafts = sortedDrafts.filter((draft) => draft.favourited);
+          setFavouriteDrafts(favDrafts);
+
+          // Set sorted drafts for the recent list
+          setRecentDrafts(sortedDrafts);
+        })
+        .catch((err) => console.error('Error fetching drafts:', err));
     }
   }, [user]);
 
@@ -71,41 +76,84 @@ const DraftsPage = ({ user }) => {
 
   return (
     <div className="drafts-page">
-     
       <h2 className="folder-title">
-        <span role="img" aria-label="Favorites">❤️</span> Favorites
+        <span role="img" aria-label="Favorites">
+          ❤️
+        </span>{' '}
+        Favorites
       </h2>
       <div className="folder favourites-folder">
-        <button onClick={handleFavPrev} disabled={favPage === 0} className="arrow-button">{"<"}</button>
+        <button onClick={handleFavPrev} disabled={favPage === 0} className="arrow-button">
+          {'<'}
+        </button>
         <div className="carousel-container">
           <div className="drafts-carousel">
-            {favouriteDrafts.slice(favPage * ITEMS_PER_PAGE, (favPage + 1) * ITEMS_PER_PAGE).map(draft => (
-              <div key={draft._id} className="draft-card" style={{ backgroundColor: draft.color }}> {/* Apply color here */}
-                <h3>{draft.title}</h3>
-                <p>{draft.content.substring(0, 100)}...</p> {/* Show a preview */}
-              </div>
-            ))}
+            {favouriteDrafts
+              .slice(favPage * ITEMS_PER_PAGE, (favPage + 1) * ITEMS_PER_PAGE)
+              .map((draft) => (
+                <div
+                  key={draft._id}
+                  className="draft-card"
+                  style={{ backgroundColor: draft.color }}
+                >
+                  {/* Apply color here */}
+                  <h3>{draft.title}</h3>
+                  <div
+                    className="draft-content-preview"
+                    dangerouslySetInnerHTML={{ __html: draft.content.substring(0, 100) }}
+                  />
+                  {/* Show a preview */}
+                </div>
+              ))}
           </div>
         </div>
-        <button onClick={handleFavNext} disabled={(favPage + 1) * ITEMS_PER_PAGE >= favouriteDrafts.length} className="arrow-button">{">"}</button>
+        <button
+          onClick={handleFavNext}
+          disabled={(favPage + 1) * ITEMS_PER_PAGE >= favouriteDrafts.length}
+          className="arrow-button"
+        >
+          {'>'}
+        </button>
       </div>
 
       <h2 className="folder-title">
-        <span role="img" aria-label="Recent">⏰</span> Recent
+        <span role="img" aria-label="Recent">
+          ⏰
+        </span>{' '}
+        Recent
       </h2>
       <div className="folder recent-folder">
-        <button onClick={handleRecentPrev} disabled={recentPage === 0} className="arrow-button">{"<"}</button>
+        <button onClick={handleRecentPrev} disabled={recentPage === 0} className="arrow-button">
+          {'<'}
+        </button>
         <div className="carousel-container">
           <div className="drafts-carousel">
-            {recentDrafts.slice(recentPage * ITEMS_PER_PAGE, (recentPage + 1) * ITEMS_PER_PAGE).map(draft => (
-              <div key={draft._id} className="draft-card" style={{ backgroundColor: draft.color }}> {/* Apply color here */}
-                <h3>{draft.title}</h3>
-                <p>{draft.content.substring(0, 100)}...</p> {/* Show a preview */}
-              </div>
-            ))}
+            {recentDrafts
+              .slice(recentPage * ITEMS_PER_PAGE, (recentPage + 1) * ITEMS_PER_PAGE)
+              .map((draft) => (
+                <div
+                  key={draft._id}
+                  className="draft-card"
+                  style={{ backgroundColor: draft.color }}
+                >
+                  {/* Apply color here */}
+                  <h3>{draft.title}</h3>
+                  <div
+                    className="draft-content-preview"
+                    dangerouslySetInnerHTML={{ __html: draft.content.substring(0, 100) }}
+                  />
+                  {/* Show a preview */}
+                </div>
+              ))}
           </div>
         </div>
-        <button onClick={handleRecentNext} disabled={(recentPage + 1) * ITEMS_PER_PAGE >= recentDrafts.length} className="arrow-button">{">"}</button>
+        <button
+          onClick={handleRecentNext}
+          disabled={(recentPage + 1) * ITEMS_PER_PAGE >= recentDrafts.length}
+          className="arrow-button"
+        >
+          {'>'}
+        </button>
       </div>
     </div>
   );

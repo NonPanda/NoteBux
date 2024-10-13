@@ -1,0 +1,47 @@
+.sticky-toolbar {
+    position: sticky;
+    top: 0;
+    padding: 10px; /* Padding around the toolbar */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    z-index: 1000; /* Ensure it stays on top */
+    justify-content: center;
+    
+  }
+  
+  .left-icons,
+  .right-icons {
+    display: flex; /* Align icons in a row */
+    margin: 0 18%; /* Add margin to separate from center */
+  }
+
+  .left-icons{
+    margin-right: 25%;
+  }
+
+  
+  .center-icons {
+    display: flex; /* Align formatting icons in a row */
+    background-color: #000; /* Black background for center icons */
+    padding: 5px 10px; /* Padding around center icons */
+    border-radius: 20px; /* Rounded corners */
+    margin: 0 15px; /* Add margin to separate from left and right icons */
+    flex-grow: 1; /* Take remaining space between left and right icons */
+    justify-content: center; /* Center the formatting icons */
+    max-width:500px;
+  }
+  
+  .toolbar-button {
+    background: none; /* Remove default button background */
+    border: none; /* Remove border */
+    color: white; /* Text color */
+    font-size: 24px; /* Font size */
+    margin: 0 10px; /* Spacing between buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: color 0.3s; /* Transition for hover effect */
+  }
+  
+  .toolbar-button:hover {
+    color: #ff6f61; /* Change color on hover */
+  }
+  
