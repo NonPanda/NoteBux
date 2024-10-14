@@ -1,19 +1,19 @@
 import React from 'react';
 import './Blackbox.css'; // Ensure you have the CSS imported
 
-const StickyToolbar = () => {
+const StickyToolbar = ({ onSave, onToggleFavourite, onSetDaily, favourited }) => {
   const handleCommand = (command) => {
-      document.execCommand(command, false, null);
+    document.execCommand(command, false, null);
   };
 
   return (
     <div className="sticky-toolbar">
       {/* Left Icons */}
       <div className="left-icons">
-        <button className="toolbar-button" title="Save">
+        <button className="toolbar-button" title="Save" onClick={onSave}>
           💾 {/* Save Icon */}
         </button>
-        <button className="toolbar-button" title="Clock">
+        <button className="toolbar-button" title="Clock" onClick={onSetDaily}>
           ⏰ {/* Clock Icon */}
         </button>
       </div>
@@ -48,11 +48,11 @@ const StickyToolbar = () => {
 
       {/* Right Icons */}
       <div className="right-icons">
-        <button className="toolbar-button" title="Clipboard">
+      <button className="toolbar-button" title="Clipboard">
           📋 {/* Clipboard Icon */}
         </button>
-        <button className="toolbar-button" title="Favorite">
-          ❤️ {/* Favorite Icon */}
+        <button className="toolbar-button" title="Favorite" onClick={onToggleFavourite}>
+          {favourited ? '🤍' : '🧡'} {/* Toggle heart icon based on favourited state */}
         </button>
         <button className="toolbar-button" title="Share">
           📤 {/* Share Icon */}

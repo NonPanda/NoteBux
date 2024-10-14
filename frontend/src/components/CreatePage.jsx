@@ -7,9 +7,9 @@ import StickyToolbar from './Blackbox';
 const CreatePage = ({ user }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const draftToEdit = location.state?.draft; // Get draft from location state
+  const draftToEdit = location.state?.draft;
 
-  // State initialization based on whether it's edit or create mode
+  // State initialization
   const [title, setTitle] = useState(draftToEdit ? draftToEdit.title : '');
   const [content, setContent] = useState(draftToEdit ? draftToEdit.content : '');
   const [category, setCategory] = useState(draftToEdit ? draftToEdit.category : '');
@@ -24,10 +24,8 @@ const CreatePage = ({ user }) => {
     }
   }, [draftToEdit]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSave = async () => {
     const content = contentEditableRef.current.innerHTML;
-
     try {
       const data = { title, content, category, favourited, daily };
       const headers = { Authorization: `Bearer ${user?.uid}` };
@@ -50,14 +48,7 @@ const CreatePage = ({ user }) => {
         console.log('Draft created');
       }
 
-      // Reset form fields after save
-      setTitle('');
-      contentEditableRef.current.innerHTML = '';
-      setContent('');
-      setCategory('');
-
-      // Redirect to homepage or another page after save
-      navigate('/');
+      navigate('/create', {state: {draft: data}});
     } catch (error) {
       console.error('Error creating or updating draft:', error.response?.data || error.message);
     }
@@ -68,8 +59,13 @@ const CreatePage = ({ user }) => {
       <div className="header">
         <h1>{draftToEdit ? 'Edit Draft' : 'Create Draft'}</h1>
       </div>
-      <StickyToolbar />
-      <form onSubmit={handleSubmit} className="editor-form">
+      <StickyToolbar
+        onSave={handleSave}
+        onToggleFavourite={() => setFavourited((prev) => !prev)}
+        onSetDaily={() => setDaily(true)}
+        favourited={favourited} // Pass current favourited state
+      />
+      <form onSubmit={handleSave} className="editor-form">
         <div className="title-container">
           <input
             type="text"
@@ -98,26 +94,6 @@ const CreatePage = ({ user }) => {
             onChange={(e) => setCategory(e.target.value)}
           />
         </div>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={favourited}
-              onChange={(e) => setFavourited(e.target.checked)}
-            />
-            Favourite
-          </label>
-        </div>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={daily}
-              onChange={(e) => setDaily(e.target.checked)}
-            />
-            Daily
-          </label>
-        </div>
         <div className="button-container">
           <button type="submit" className="submit-btn">
             {draftToEdit ? 'Update Draft' : 'Create Draft'}
@@ -126,7 +102,10 @@ const CreatePage = ({ user }) => {
       </form>
       <footer className="footer">
         <div className="page-indicator">1/1</div>
-        <button className="info-button" title="Information"></button>
+        <button className="info-button" title="Information">
+          ℹ️
+        </button>
+
       </footer>
     </div>
   );

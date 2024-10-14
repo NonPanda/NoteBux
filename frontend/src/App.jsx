@@ -7,7 +7,6 @@ import SearchPage from './components/SearchPage';
 import CreatePage from './components/CreatePage';
 import { useState, useEffect } from 'react';
 import { auth } from './firebaseConfig';
-import EditPage from './components/EditPage';
 import DraftsPage from './components/Drafts';
 import AlertsPage from './components/Alerts';
 import Alert from './components/alertscreate';
@@ -37,7 +36,6 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/search" element={<SearchPage user={user} />} />
         <Route path="/create" element={<CreatePage user={user} />} />
-        <Route path="/edit-draft/:id" element={<EditPage user={user} />} />
         <Route path="/drafts" element={<DraftsPage user={user} />} />
         <Route path="/alerts" element={<AlertsPage user={user} />} />
         <Route path="/alertscreate" element={<Alert user={user} />} />

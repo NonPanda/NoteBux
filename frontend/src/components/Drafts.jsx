@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import './Drafts.css'; // Optional: Add some styling for folders
+import { Link } from 'react-router-dom';
+
 
 const ITEMS_PER_PAGE = 4; // Number of drafts shown per "page" in the carousel
 
@@ -10,21 +12,26 @@ const DraftsPage = ({ user }) => {
   const [recentDrafts, setRecentDrafts] = useState([]);
   const colorOptions = ['#D9E8FC', '#FFEADD', '#FFD8F4', '#FDE99D', '#B0E9CA', '#FFDBE4', '#FCFAD9'];
 
+
   // Pagination state for favourites and recent drafts
   const [favPage, setFavPage] = useState(0);
   const [recentPage, setRecentPage] = useState(0);
 
   useEffect(() => {
+
     if (user) {
+      
       // Fetch all drafts
       axios
         .get('http://localhost:5000/api/drafts', {
           headers: {
             Authorization: `Bearer ${user.uid}`,
+
           },
         })
         .then((res) => {
           const allDrafts = res.data;
+
 
           // Assign random colors to each draft
           const draftsWithColors = allDrafts.map((draft) => ({
@@ -131,19 +138,16 @@ const DraftsPage = ({ user }) => {
             {recentDrafts
               .slice(recentPage * ITEMS_PER_PAGE, (recentPage + 1) * ITEMS_PER_PAGE)
               .map((draft) => (
-                <div
-                  key={draft._id}
-                  className="draft-card"
-                  style={{ backgroundColor: draft.color }}
-                >
-                  {/* Apply color here */}
-                  <h3>{draft.title}</h3>
-                  <div
-                    className="draft-content-preview"
-                    dangerouslySetInnerHTML={{ __html: draft.content.substring(0, 100) }}
-                  />
-                  {/* Show a preview */}
-                </div>
+                <Link 
+            key={draft._id} 
+            to={`/create`} 
+            state={{ draft }} // Pass the draft data
+          >
+            <div className="draft-card" style={{ backgroundColor: draft.color }}>
+              <h3 className='text-center'>{draft.title}</h3>
+              <div className="draft-content-preview" dangerouslySetInnerHTML={{ __html: draft.content.substring(0, 100) }} />
+            </div>
+          </Link>
               ))}
           </div>
         </div>

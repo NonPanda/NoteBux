@@ -1,142 +1,175 @@
-
-
-
 .date-navigation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .search-bar {
-    width: 100%; 
-    border-radius:10px;
-    max-width: 600px; 
-    height:40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin: 30px auto; /* Centers the search bar horizontally */
-    padding:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
+.search-bar {
+  width: 100%; 
+  border-radius: 10px;
+  max-width: 600px; 
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 30px; /* Centers the search bar horizontally */
+  padding: 10px;
+}
 
-  
-  .arrow-button {
-    background-color: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .dates-container {
-    display: flex;
-    gap: 10px;
-    margin-left:5%;
-    margin-right:5%;
-    text-decoration: none;
-  }
-  
-  .date-button {
-    background-color: #f2f2f2;
-    padding: 10px;
-    border: none;
-    border-radius: 17px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration:none;
-  }
-  
-  .date-button.active {
-    background-color: #ff6f61;
-    color: white;
-  }
-  
-  .day-number {
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .day-name {
-    font-size: 12px;
+.arrow-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
 
-  }
-  
-  .drafts-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 35px;
-    margin-top: 20px;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+.dates-container {
+  display: flex;
+  gap: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-decoration: none;
+}
 
-  }
-  
-  .draft-card {
-    width: 200px;
-    height: 200px;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding-left: 18px;
-    padding-right: 18px;
-    border: 1px solid #bbb6b6; 
-    text-decoration: none;
-  }
-  
-  .draft-card h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
+.date-button {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border: none;
+  border-radius: 17px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
 
-  }
-  
-  .draft-card p {
-    font-size: 14px;
-    margin-top: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: none;
-    
-  }
-  
+.date-button.active {
+  background-color: #ff6f61;
+  color: white;
+}
 
-  .arrow-button{
-    width: 30px;
-    height: 30px;
-    transition: transform 0.3s ease;
+.day-number {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+}
 
-  }
-  
-  .arrow-button:hover{
-    transform: scale(1.1);
-  }
+.day-name {
+  font-size: 12px;
+}
 
+.drafts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 35px;
+  margin-top: 20px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  /* Remove default link styling for the draft links */
+.draft-card {
+  width: 200px;
+  height: 200px;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 18px;
+  padding-right: 18px;
+  border: 1px solid #bbb6b6; 
+  text-decoration: none;
+}
+
+.draft-card h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.draft-card p {
+  font-size: 14px;
+  margin-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+
+.arrow-button {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.arrow-button:hover {
+  transform: scale(1.1);
+}
+
+/* Remove default link styling for the draft links */
 .drafts-container a {
   text-decoration: none; /* Remove underline */
   color: inherit; /* Inherit the color from the parent element */
 }
 
-.draft-card:hover{
+.draft-card:hover {
   cursor: pointer;
   transform: scale(1.04);
   transition: transform 0.3s ease;
-  
-
-
 }
 
+/* Category Buttons */
+.category-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 10px;
+}
 
+.category-button {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  color: #333;
+  min-width:60px;
+}
+
+.category-button.active {
+  background-color: #E77A64; /* Active state color */
+  color: white;
+  border: none;
+}
+
+.category-button:hover {
+  background-color: #f0f0f0;
+}
+
+.find-button {
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.find-button:hover {
+  background-color: #e65a50;
+}
+
+.search-bar-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right:10%;
+}
