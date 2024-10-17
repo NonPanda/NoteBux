@@ -13,7 +13,7 @@ const draftSchema = new mongoose.Schema({
 });
 
 draftSchema.pre('save', function(next) {
-  if (this.isModified('title') || this.isModified('content') || this.isModified('category') || this.isModified('favourited')) {
+  if (this.isModified('title') || this.isModified('content') || this.isModified('category') || this.isModified('favourited')|| this.isModified('daily')) {
     this.updatedAt = Date.now();
   }
   next();

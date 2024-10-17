@@ -1,7 +1,7 @@
 import React from 'react';
 import './Blackbox.css'; // Ensure you have the CSS imported
 
-const StickyToolbar = ({ onSave, onToggleFavourite, onSetDaily, favourited }) => {
+const StickyToolbar = ({ onSave, onToggleFavourite, onSetDaily, favourited, onClipboardClick }) => {
   const handleCommand = (command) => {
     document.execCommand(command, false, null);
   };
@@ -48,7 +48,7 @@ const StickyToolbar = ({ onSave, onToggleFavourite, onSetDaily, favourited }) =>
 
       {/* Right Icons */}
       <div className="right-icons">
-      <button className="toolbar-button" title="Clipboard">
+        <button className="toolbar-button" title="Clipboard" onClick={onClipboardClick}>
           📋 {/* Clipboard Icon */}
         </button>
         <button className="toolbar-button" title="Favorite" onClick={onToggleFavourite}>

@@ -54,6 +54,26 @@ const CreatePage = ({ user }) => {
     }
   };
 
+  const handleClipboardClick = () => {
+    // Extract plain text from contentEditable div
+    const plainText = contentEditableRef.current.innerText;
+
+    // Create a temporary textarea to hold the text for copying
+    const textarea = document.createElement('textarea');
+    textarea.value = plainText;
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      document.execCommand('copy');
+      console.log('Content copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy content:', err);
+    }
+
+    document.body.removeChild(textarea); // Remove the temporary textarea
+  };
+
   return (
     <div className="create-page-container">
       <div className="header">
@@ -62,8 +82,9 @@ const CreatePage = ({ user }) => {
       <StickyToolbar
         onSave={handleSave}
         onToggleFavourite={() => setFavourited((prev) => !prev)}
-        onSetDaily={() => setDaily(true)}
-        favourited={favourited} // Pass current favourited state
+        onSetDaily={() => setDaily((prev) => !prev)}
+        favourited={favourited}
+        onClipboardClick={handleClipboardClick} // Pass clipboard handler to StickyToolbar
       />
       <form onSubmit={handleSave} className="editor-form">
         <div className="title-container">
@@ -105,7 +126,6 @@ const CreatePage = ({ user }) => {
         <button className="info-button" title="Information">
           ℹ️
         </button>
-
       </footer>
     </div>
   );

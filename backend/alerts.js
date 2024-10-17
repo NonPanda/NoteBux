@@ -30,14 +30,16 @@ router.get('/', extractUserId, async (req, res) => {
 });
 
 // POST a new alert
+// POST a new alert
 router.post('/', extractUserId, async (req, res) => {
-  const { content, time } = req.body; // Get content and time from request body
+  const { content, time, totalTime } = req.body; // Get content, time, and totalTime from request body
   const userId = req.userId; // Access userId here
 
   const alert = new Alert({
     content,
     time,
-    user: userId // Link alert to the user
+    user: userId, // Link alert to the user
+    totalTime // Include totalTime when saving
   });
 
   try {
@@ -47,6 +49,7 @@ router.post('/', extractUserId, async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
 
 // GET a specific alert by id
 router.get('/:id', extractUserId, async (req, res) => {

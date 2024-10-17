@@ -13,6 +13,10 @@ const alertSchema = new mongoose.Schema({
     type: String, // Or mongoose.Schema.Types.ObjectId if linked to a User model
     required: true,
   },
+  totalTime: {
+    type: Number, // Duration in minutes
+    required: true,
+  }
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt
 });
