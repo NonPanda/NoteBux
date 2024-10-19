@@ -31,14 +31,15 @@ router.get('/', extractUserId, async (req, res) => {
 
 // POST a new draft
 router.post('/create', extractUserId, async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, content, category, description } = req.body;
   const userId = req.userId; // Access userId here
 
   const draft = new Draft({
     userId,
     title,
     content,
-    category
+    category,
+    description
   });
 
   try {
@@ -70,7 +71,7 @@ router.get('/:id', extractUserId, async (req, res) => {
 // PUT route to update an existing draft
 router.put('/:id', extractUserId, async (req, res) => {
   const { id } = req.params;
-  const { title, content, category, favourited, daily } = req.body; // Include favourited
+  const { title, content, category, favourited, daily, description } = req.body; // Include favourited
   const userId = req.userId;
   const updatedAt = Date.now(); 
   
@@ -79,7 +80,7 @@ router.put('/:id', extractUserId, async (req, res) => {
     // Find the draft by id and ensure it belongs to the current user
     const draft = await Draft.findOneAndUpdate(
       { _id: id, userId }, // Ensure the draft belongs to the user
-      { title, content, category, favourited, updatedAt, daily }, // Update fields
+      { title, content, category, favourited, updatedAt, daily, description }, // Update fields
       { new: true } // Return the updated document
     
     );

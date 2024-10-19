@@ -22,8 +22,8 @@
   
   .center-icons {
     display: flex; /* Align formatting icons in a row */
-    background-color: #000; /* Black background for center icons */
-    padding: 5px 10px; /* Padding around center icons */
+    background-color: #181818;/* Black background for center icons */
+    padding: 15px 30px; /* Padding around center icons */
     border-radius: 20px; /* Rounded corners */
     margin: 0 15px; /* Add margin to separate from left and right icons */
     flex-grow: 1; /* Take remaining space between left and right icons */

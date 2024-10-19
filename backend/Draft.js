@@ -10,10 +10,11 @@ const draftSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   daily: { type: Boolean, default: false },
+  description: { type: String }
 });
 
 draftSchema.pre('save', function(next) {
-  if (this.isModified('title') || this.isModified('content') || this.isModified('category') || this.isModified('favourited')|| this.isModified('daily')) {
+  if (this.isModified('title') || this.isModified('content') || this.isModified('category') || this.isModified('favourited')|| this.isModified('daily')|| this.isModified('description')) {
     this.updatedAt = Date.now();
   }
   next();
