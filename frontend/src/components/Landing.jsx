@@ -6,6 +6,7 @@ import heroImage2 from '../assets/images/Group2.svg';
 import heroImage3 from '../assets/images/Group3.svg';
 import leftArrow from '../assets/icons/arrow-left.svg';
 import rightArrow from '../assets/icons/arrow-right.svg';
+import { signInWithPopup, auth, provider } from '../firebaseConfig';
 
 const Landing = () => {
   const [index, setIndex] = useState(0); 
@@ -35,6 +36,15 @@ const Landing = () => {
     setIndex((prevIndex) => (prevIndex - 1 + carouselItems.length) % carouselItems.length);
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const loggedInUser = result.user;
+      console.log("User Info: ", loggedInUser);
+    } catch (error) {
+      console.error("Login Error: ", error);
+    }
+  };
   return (
     <div>
       {/* Hero Section */}
@@ -74,11 +84,11 @@ const Landing = () => {
             ))}
           </div>
 
-          <Button variant="danger" className="cta-button">
+          <Button variant="danger" className="cta-button" onClick={handleGoogleLogin}>
             GET STARTED
           </Button>
           <p className="mt-3">
-            <a href="/" className="login-link">Already signed in?</a>
+            <a href="/drafts" className="login-link">Already signed in?</a>
           </p>
         </div>
       </section>

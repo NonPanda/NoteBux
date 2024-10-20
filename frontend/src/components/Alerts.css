@@ -1,5 +1,5 @@
 .alerts-page {
-    padding: 20px;
+    padding: 50px;
 }
 
 .folder {
@@ -10,7 +10,7 @@
 
 .folder-title {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .carousel-container {
@@ -120,7 +120,7 @@ button:disabled {
   
   .alert-form input[type="text"]:focus,
   .alert-form input[type="number"]:focus {
-    border-color: #90EE90;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
     outline: none;
   }
   
@@ -149,4 +149,63 @@ button:disabled {
     flex-direction: column;
     gap: 15px;
   }
+
   
+  
+  .alerts-page {
+    padding: 50px;
+}
+
+.folder {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.folder-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Rename carousel styles to alert-container */
+.alerts-container {
+    width: 80%; /* Visible container has a fixed width */
+    overflow: hidden; /* Hide overflowing alerts */
+    border-radius: 8px;
+    border: 0.8px solid rgb(221, 216, 216);
+    padding: 25px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+}
+
+.alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.alert-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.alert-content {
+    background-color: aliceblue;
+    width: 80%;
+    padding: 15px;
+    padding-left: 30px;
+    border-radius: 5px;
+}
+
+.alert-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Remaining styles stay the same */

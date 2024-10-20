@@ -1,29 +1,55 @@
 .drafts-page {
-    padding: 20px;
+    padding: 60px;
+    width:100%;
   }
   
-  .folder {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
+  .main-rectangle {
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom:60px;
+    width:100%;
+    border: 0.8px solid rgb(221, 216, 216); 
   }
 
+  .folder{
+    margin:0px;
+    padding:0px;
+    width:100%;
+  }
   
   .folder-title {
     font-size: 24px;
-    margin-bottom: 10px;
+    color: #D2691E;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-left:20px;
   }
   
+ 
+  
   .carousel-container {
-    width: 80%; /* Make sure the visible container has a fixed width */
-    overflow: hidden; /* Hide overflowing drafts */
+    display: flex;
+    padding: 20px 0px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    justify-content: space-between; 
+    width: 100%;
+    flex-wrap: wrap;
+  
   }
   
   .drafts-carousel {
     display: flex;
-    transition: transform 0.5s ease-in-out; /* Smooth scroll transition */
+    gap: 70px;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+    padding:20px 20px;
+    padding-left:50px;
   }
+  
 
+ 
  
   
   .draft-card {
@@ -32,17 +58,40 @@
     margin: 0 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 250px;
-    flex-shrink: 0; 
-  }
-  
-  .arrow-button {
-    background-color: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    margin: 0 15px;
-  }
-  
+    flex-shrink: 0;
+    position: relative; /* Required for the :before effect */
+    max-height: 300px; /* Limit the height of the draft card */
+    overflow: hidden; /* Hide overflow to create the blur effect */
+    word-wrap: break-word; /* Ensure long words or content wraps */
+    display: flex;
+    flex-direction: column; /* Stack title and content */
+}
+
+/* Add the white blur effect at the bottom */
+.draft-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px; /* Height of the gradient */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.3)); /* Fade to white */
+    pointer-events: none; /* Ensure the overlay doesn't interfere with clicks */
+}
+
+/* Ensure content wraps, and limit its height */
+.draft-content-preview {
+    flex-grow: 1;
+    word-wrap: break-word; /* Ensure long words wrap */
+    overflow: hidden; /* Hide any overflow content */
+    line-height: 1.5; /* Adjust line height for better readability */
+    text-overflow: ellipsis; /* Add ellipsis if the content overflows */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal; /* Ensure text breaks into new lines */
+}
+
+
   button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -53,17 +102,43 @@
     margin-bottom: 30px;
     border-radius: 8px;
     border: 0.8px solid rgb(221, 216, 216);
-    padding: 25px;
+    padding: 45px 0px;
+    width:auto;
   }
 
   .recent-folder {
     margin-bottom: 30px;
     border-radius: 8px;
     border: 0.8px solid rgb(221, 216, 216);
-    padding: 25px;
+    padding: 45px 0px;
+    width:auto;
+
   }
 
   .drafts-carousel a{
     text-decoration: none; /* Remove underline */
     color: inherit; /* Inherit the color from the parent element */
+  }
+
+  .arrow-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin:0px;
+
+  }
+  
+  .arrow-button img {
+    width: 24px; /* Adjust the size to fit your design */
+    height: 24px;
+
+  }
+  
+  .arrow-button:disabled img {
+    opacity: 0.5; /* Reduce opacity for disabled state */
+  }
+  
+  .arrow-button:disabled {
+    cursor: not-allowed;
   }

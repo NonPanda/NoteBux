@@ -7,6 +7,7 @@
 
 .search-bar {
   width: 100%; 
+  border: 1px solid #ccc;
   border-radius: 10px;
   max-width: 600px; 
   height: 40px;
@@ -17,6 +18,7 @@
   margin: 30px; /* Centers the search bar horizontally */
   padding: 10px;
 }
+
 
 .arrow-button {
   background-color: transparent;
@@ -48,8 +50,14 @@
 }
 
 .date-button.active {
-  background-color: #ff6f61;
+  background-color: #E77A64; /* Active state color */
   color: white;
+}
+
+.date-button:hover {
+  background-color: #dd674f; /* Active state color */
+  color: white;
+  transform: scale(1.06);
 }
 
 .day-number {
@@ -76,7 +84,7 @@
   width: 200px;
   height: 200px;
   padding: 15px;
-  border-radius: 15px;
+  border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -151,11 +159,13 @@
 }
 
 .category-button:hover {
-  background-color: #f0f0f0;
+  transform: scale(1.06);
+  background-color: #dd674f; /* Active state color */
+  color: white;
 }
 
 .find-button {
-  background-color: #ff6f61;
+  background-color: #E77A64;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -164,7 +174,7 @@
 }
 
 .find-button:hover {
-  background-color: #e65a50;
+  background-color: #dd674f;
 }
 
 .search-bar-container{

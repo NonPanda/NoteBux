@@ -9,7 +9,6 @@ import { useState, useEffect } from 'react';
 import { auth } from './firebaseConfig';
 import DraftsPage from './components/Drafts';
 import AlertsPage from './components/Alerts';
-import Alert from './components/alertscreate';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -38,7 +37,6 @@ function App() {
         <Route path="/create" element={<CreatePage user={user} />} />
         <Route path="/drafts" element={<DraftsPage user={user} />} />
         <Route path="/alerts" element={<AlertsPage user={user} />} />
-        <Route path="/alertscreate" element={<Alert user={user} />} />
       </Routes>
     </Router>
   );

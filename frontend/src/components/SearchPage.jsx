@@ -5,7 +5,7 @@ import './SearchPage.css';
 import leftArrow from '../assets/icons/arrow-left.svg';
 import rightArrow from '../assets/icons/arrow-right.svg';
 
-const colorOptions = ['#D9E8FC', '#FFEADD', '#FFD8F4', '#FDE99D', '#B0E9CA', '#FFDBE4', '#FCFAD9'];
+const colorOptions= ['#FDE99D','#D9E8FC','#FFD8F4','#FFEADD','#B0E9CA','#FFDBE4'];
 
 const SearchPage = ({ user }) => {
   const [drafts, setDrafts] = useState([]);

@@ -1,16 +1,18 @@
 .create-page-container {
-  margin: 30px 50px;
-  padding: 20px;
+  margin: 5px 30px;
+  padding: 35px;
   background-color: #fff;
   border-radius: 10px;
+  padding-bottom:0px;
 }
+
 
 
 .toolbar {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .toolbar button {
@@ -39,7 +41,7 @@
 .title-input {
   margin-left: 10%;
   width: 80%;
-  padding: 45px;
+  padding: 15px;
   font-size: 40px;
   font-weight: bold;
   border: 0px;
@@ -50,33 +52,31 @@
   
   /* Add smooth transition for border-bottom and padding */
   transition: border-bottom 0.3s ease-in-out, padding 0.3s ease-in-out;
+  margin-bottom:30px;
 }
 
 .title-input:focus {
   border-bottom: 1px solid #b2b8b3; /* Example: green border when focused */
+  padding: 10px;
 }
 
 .content-input {
   width: 100%;
-  min-height: 200px;
-  padding: 15px;
-  font-size: 16px;
+  min-height: 330px;
+  padding: 25px;
+  font-size: 24px;
   line-height: 1.5;
   border-radius: 5px;
   outline: none; 
   white-space: pre-wrap;
   
-  transition: padding 0.6s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: padding 0.6s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 
 .content-input:focus {
-  box-shadow: 0px 0px 8px rgba(213, 213, 213, 0.6); 
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-
-.category-container {
-  margin-bottom: 20px;
-}
 
 .category-input {
   width: 100%;
@@ -84,6 +84,8 @@
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+
+
 
 .button-container {
   display: flex;
@@ -106,12 +108,15 @@
 }
 
 .footer {
+
   display: flex;
   justify-content: center; /* Center items in the footer */
   align-items: center;
   margin-top: 20px;
   padding: 10px;
-  border-top: 1px solid #ddd;
+  padding-top:30px;
+  padding-bottom:0px;
+  border-top: 0.8px solid #ddd;
   position: relative; /* Set position to relative for absolute positioning of the info button */
 }
 

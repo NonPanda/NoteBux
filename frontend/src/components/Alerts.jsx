@@ -3,9 +3,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import moment from 'moment'; // For easier date manipulation
 import './Alerts.css'; // Optional: Add some styling for alerts
+import LeftArrow from '../assets/icons/arrow-left.svg';
+import RightArrow from '../assets/icons/arrow-right.svg';
+import Pin from '../assets/icons/create/pin.svg';
+import Daily from '../assets/icons/create/alert.svg';
 
 const ITEMS_PER_PAGE = 4;
-const colorOptions = ['#D9E8FC', '#FFEADD', '#FFD8F4', '#FDE99D', '#B0E9CA', '#FFDBE4', '#FCFAD9'];
+const colorOptions= ['#FDE99D','#D9E8FC','#FFD8F4','#FFEADD','#B0E9CA','#FFDBE4'];
 
 const AlertsPage = ({ user }) => {
   const [dailyDrafts, setDailyDrafts] = useState([]);
@@ -124,12 +128,16 @@ const AlertsPage = ({ user }) => {
   return (
     <div className="alerts-page">
       {/* Daily Drafts Section */}
+      <div className="main-rectangle">
       <h2 className="folder-title">
-        <span role="img" aria-label="Daily">🌞</span> Daily Drafts
+        <span role="img" aria-label="Daily">
+          <img src={Pin} alt="Daily" />
+          
+          </span> Daily Drafts
       </h2>
       <div className="folder daily-folder">
         <button onClick={handleDailyPrev} disabled={dailyPage === 0} className="arrow-button">
-          {'<'}
+          <img src={LeftArrow } alt="Left Arrow" />
         </button>
         <div className="carousel-container">
           <div className="drafts-carousel">
@@ -179,84 +187,93 @@ const AlertsPage = ({ user }) => {
           disabled={(dailyPage + 1) * ITEMS_PER_PAGE >= dailyDrafts.length}
           className="arrow-button"
         >
-          {'>'}
+          <img src={RightArrow} alt="Right Arrow" />
         </button>
       </div>
+    </div>
 
       {/* Alerts Section */}
-      <div className="alerts-section">
-        <h2>Alerts ({alerts.length})</h2>
-        <form onSubmit={handleAddAlert} className="alert-form">
-          <input
-            type="text"
-            placeholder="Alert content"
-            value={alertContent}
-            onChange={(e) => setAlertContent(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Time in minutes"
-            value={alertTime}
-            onChange={(e) => setAlertTime(e.target.value)}
-            required
-          />
-          <button type="submit">Add Alert</button>
-        </form>
-        
-        <div className="alerts-list">
-          {alerts.map(alert => {
-            const totalTimeInMilliseconds = alert.totalTime * 60000;
-            const remainingTime = Math.max(0, new Date(alert.time).getTime() - Date.now());
-            const remainingTimePercentage = (remainingTime / totalTimeInMilliseconds) * 100;
+      <div className="main-rectangle">
+  <h2 className="folder-title">
+    <span role="img" aria-label="Alerts"></span>
+    <img src={Daily} alt="Alerts" />      
+       Alerts ({alerts.length})
+  </h2>
+  
+  <form onSubmit={handleAddAlert} className="alert-form">
+    <input
+      type="text"
+      placeholder="Alert content"
+      value={alertContent}
+      onChange={(e) => setAlertContent(e.target.value)}
+      required
+    />
+    <input
+      type="number"
+      placeholder="Time in minutes"
+      value={alertTime}
+      onChange={(e) => setAlertTime(e.target.value)}
+      required
+    />
+    <button type="submit">Add Alert</button>
+  </form>
+  
+  <div className="alerts-container"> {/* New container for styling */}
+    <div className="alerts-list">
+      {alerts.map(alert => {
+        const totalTimeInMilliseconds = alert.totalTime * 60000;
+        const remainingTime = Math.max(0, new Date(alert.time).getTime() - Date.now());
+        const remainingTimePercentage = (remainingTime / totalTimeInMilliseconds) * 100;
 
-            let alertColor;
-            if (remainingTimePercentage <= 30) {
-              alertColor = '#D9614C'; // Red for less than 30%
-            } else if (remainingTimePercentage <= 60) {
-              alertColor = '#FFCC00'; // Yellow for 30% to 60%
-            } else {
-              alertColor = '#90EE90'; // Green for more than 60%
-            }
+        let alertColor;
+        if (remainingTimePercentage <= 30) {
+          alertColor = '#D9614C'; // Red for less than 30%
+        } else if (remainingTimePercentage <= 60) {
+          alertColor = '#FFCC00'; // Yellow for 30% to 60%
+        } else {
+          alertColor = '#5C966C';
+        }
 
-            return (
-              <div key={alert._id} className="alert-card">
-                <button
-                  className="remove-button"
-                  onClick={() => handleRemoveAlert(alert._id)}
-                  style={{
-                    backgroundColor: alertColor,
-                    borderRadius: '4px',
-                    width: '25px',
-                    height: '25px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: '#fff',
-                    border: 'none',
-                  }}
-                >
-                  ✕
-                </button>
-                
-                <div className="alert-content">{alert.content}</div>
-                
-                <span
-                  className="timer-button"
-                  style={{
-                    backgroundColor: alertColor,
-                    padding: '8px 12px',
-                    borderRadius: '12px',
-                    color: '#fff',
-                  }}
-                >
-                  {formatRemainingTime(remainingTime)}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+        return (
+          <div key={alert._id} className="alert-card">
+            <button
+              className="remove-button"
+              onClick={() => handleRemoveAlert(alert._id)}
+              style={{
+                backgroundColor: alertColor,
+                borderRadius: '4px',
+                width: '25px',
+                height: '25px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                border: 'none',
+              }}
+            >
+              ✕
+            </button>
+            
+            <div className="alert-content">{alert.content}</div>
+            
+            <span
+              className="timer-button"
+              style={{
+                backgroundColor: alertColor,
+                padding: '8px 12px',
+                borderRadius: '12px',
+                color: '#fff',
+              }}
+            >
+              {formatRemainingTime(remainingTime)}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
+
     </div>
   );
 };

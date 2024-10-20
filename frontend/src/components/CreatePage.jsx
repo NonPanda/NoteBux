@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './CreatePage.css';
 import StickyToolbar from './Blackbox';
+import InfoIcon from '../assets/icons/create/Info.svg';
+
 
 const CreatePage = ({ user }) => {
   const location = useLocation();
@@ -82,12 +84,27 @@ const CreatePage = ({ user }) => {
     document.body.removeChild(textarea);
   };
 
+  const handleDelete = async () => {
+    try {
+      const headers = { Authorization: `Bearer ${user?.uid}` };
+      await axios.delete(`http://localhost:5000/api/drafts/${draftId}`, { headers });
+      showAlert('Draft deleted successfully', 'success');
+      navigate('/drafts');
+    } catch (error) {
+      showAlert('Error deleting draft', 'error');
+      console.error('Error deleting draft:', error.response?.data || error.message);
+    }
+  };
+
+
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
 
   const handlePopupSave = () => {
     closePopup(); // Close the popup after saving the data
   };
+
+
 
   return (
     <div className="create-page-container">
@@ -104,6 +121,8 @@ const CreatePage = ({ user }) => {
         onSetDaily={() => setDaily((prev) => !prev)}
         favourited={favourited}
         onClipboardClick={handleClipboardClick}
+        onDelete={handleDelete}
+
       />
       <form onSubmit={handleSave} className="editor-form">
         <div className="title-container">
@@ -129,7 +148,7 @@ const CreatePage = ({ user }) => {
       </form>
       <footer className="footer">
         <button className="info-button" title="Information" onClick={openPopup}>
-          ℹ️
+          <img src={InfoIcon} alt="Info" />
         </button>
       </footer>
 

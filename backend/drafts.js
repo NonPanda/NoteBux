@@ -31,7 +31,7 @@ router.get('/', extractUserId, async (req, res) => {
 
 // POST a new draft
 router.post('/create', extractUserId, async (req, res) => {
-  const { title, content, category, description } = req.body;
+  const { title, content, category, description, daily, favourited } = req.body;
   const userId = req.userId; // Access userId here
 
   const draft = new Draft({
@@ -39,7 +39,9 @@ router.post('/create', extractUserId, async (req, res) => {
     title,
     content,
     category,
-    description
+    description,
+    daily,
+    favourited,
   });
 
   try {
@@ -84,6 +86,24 @@ router.put('/:id', extractUserId, async (req, res) => {
       { new: true } // Return the updated document
     
     );
+
+    if (!draft) {
+      return res.status(404).json({ message: 'Draft not found' });
+    }
+
+    res.status(200).json(draft);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.delete('/:id', extractUserId, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  try {
+    // Find the draft by id and ensure it belongs to the current user
+    const draft = await Draft.findOneAndDelete({ _id: id, userId });
 
     if (!draft) {
       return res.status(404).json({ message: 'Draft not found' });
