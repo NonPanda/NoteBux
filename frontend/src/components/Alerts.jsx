@@ -17,6 +17,7 @@ const AlertsPage = ({ user }) => {
   const [alerts, setAlerts] = useState([]);
   const [alertContent, setAlertContent] = useState('');
   const [alertTime, setAlertTime] = useState('');
+  const [expiredAlert, setExpiredAlert] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -55,7 +56,7 @@ const AlertsPage = ({ user }) => {
       const updatedAlerts = alerts.map(alert => {
         const remainingTime = Math.max(0, new Date(alert.time).getTime() - Date.now());
         if (remainingTime <= 0) {
-          handleRemoveAlert(alert._id); // Automatically remove when time reaches zero
+          handleRemoveAlert(alert._id, alert.content); // Automatically remove when time reaches zero
         }
         return { ...alert, remainingTime };
       });
@@ -102,17 +103,19 @@ const AlertsPage = ({ user }) => {
     }
   };
 
-  const handleRemoveAlert = (id) => {
+  const handleRemoveAlert = (id,content) => {
     axios.delete(`http://localhost:5000/api/alerts/${id}`, {
       headers: {
         Authorization: `Bearer ${user.uid}`,
       },
     })
-    .then(() => {
-      setAlerts(alerts.filter(alert => alert._id !== id));
-    })
-    .catch(err => console.error('Error removing alert:', err));
-  };
+  .then(() => {
+    setAlerts(alerts.filter(alert => alert._id !== id));
+    setExpiredAlert(`${content} has been dismissed`); // Set expired alert message
+    setTimeout(() => setExpiredAlert(''), 5000); // Clear message after 5 seconds
+  })
+  .catch(err => console.error('Error removing alert:', err));
+};
 
   const formatRemainingTime = (remainingTime) => {
     const minutes = Math.floor(remainingTime / 60000);
@@ -128,6 +131,11 @@ const AlertsPage = ({ user }) => {
   return (
     <div className="alerts-page">
       {/* Daily Drafts Section */}
+      {expiredAlert && (
+        <div style={{ backgroundColor: 'lightcoral', padding: '10px', textAlign: 'center' }}>
+          {expiredAlert}
+        </div>
+      )}
       <div className="main-rectangle">
       <h2 className="folder-title">
         <span role="img" aria-label="Daily">
@@ -217,9 +225,11 @@ const AlertsPage = ({ user }) => {
     />
     <button type="submit">Add Alert</button>
   </form>
-  
   <div className="alerts-container"> {/* New container for styling */}
     <div className="alerts-list">
+      {alerts.length === 0 && (<div>No alerts set</div>)}
+
+
       {alerts.map(alert => {
         const totalTimeInMilliseconds = alert.totalTime * 60000;
         const remainingTime = Math.max(0, new Date(alert.time).getTime() - Date.now());

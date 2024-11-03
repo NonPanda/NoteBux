@@ -121,7 +121,7 @@ button:disabled {
   .alert-form input[type="text"]:focus,
   .alert-form input[type="number"]:focus {
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
-    outline: none;
+    outline: none;    
   }
   
   .alert-form button {
@@ -195,7 +195,7 @@ button:disabled {
 }
 
 .alert-content {
-    background-color: aliceblue;
+    background-color: #fcfafa;
     width: 80%;
     padding: 15px;
     padding-left: 30px;
@@ -208,4 +208,9 @@ button:disabled {
     margin-bottom: 20px;
 }
 
-/* Remaining styles stay the same */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

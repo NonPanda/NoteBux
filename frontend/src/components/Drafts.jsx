@@ -4,6 +4,8 @@ import './Drafts.css';
 import { Link } from 'react-router-dom';
 import LeftArrow from '../assets/icons/arrow-left.svg';
 import RightArrow from '../assets/icons/arrow-right.svg';
+import Recent from '../assets/icons/recent.svg';
+import Favourites from '../assets/icons/favourite.svg';
 
 const ITEMS_PER_PAGE = 3;
 
@@ -68,7 +70,9 @@ const DraftsPage = ({ user }) => {
     <div className="drafts-page">
       <div className="main-rectangle">
         <h2 className="folder-title">
-          <span role="img" aria-label="Favorites">❤️</span> Favorites
+          <span role="img" aria-label="Favorites">
+            <img src={Favourites} alt="Favourites" />
+            </span> Favorites
         </h2>
         <div className="folder favourites-folder">
           <button onClick={handleFavPrev} disabled={favPage === 0} className="arrow-button">
@@ -96,7 +100,9 @@ const DraftsPage = ({ user }) => {
 
       <div className="main-rectangle">
         <h2 className="folder-title">
-          <span role="img" aria-label="Recent">⏰</span> Recent
+          <span role="img" aria-label="Recent">
+            <img src = {Recent} alt="Recent" />
+            </span> Recent
         </h2>
         <div className="folder recent-folder">
           <button onClick={handleRecentPrev} disabled={recentPage === 0} className="arrow-button">
